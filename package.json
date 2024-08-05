@@ -1,0 +1,42 @@
+{
+  "name": "@deepcomet/uplink",
+  "version": "0.0.0",
+  "description": "CometBFT RPC client",
+  "keywords": [],
+  "license": "Unlicense",
+  "author": "Deepcomet <hello@deepcomet.io>",
+  "type": "module",
+  "main": "dist/main.js",
+  "module": "dist/index.js",
+  "source": "src/index.ts",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "build": "mkdist --format=esm --ext=js -d",
+    "check": "tsc -noEmit",
+    "clean": "rm -rf ./dist ./gen",
+    "clobber": "pnpm clean && pnpm gen && pnpm build",
+    "fix": "biome check --fix; pnpm fmt",
+    "fmt": "dprint fmt; sort-package-json",
+    "gen": "pnpm gen:api:cmt38 & pnpm gen:api:cmt37 & pnpm gen:api:cmt34",
+    "gen:api:cmt34": "openapi-typescript ./vendor/cometbft-v0.34.33/rpc/openapi/openapi.yaml -o ./gen/api/cometbft-0-34-33.d.ts",
+    "gen:api:cmt37": "openapi-typescript ./vendor/cometbft-v0.37.9/rpc/openapi/openapi.yaml -o ./gen/api/cometbft-0-37-9.d.ts",
+    "gen:api:cmt38": "openapi-typescript ./vendor/cometbft-v0.38.10/rpc/openapi/openapi.yaml -o ./gen/api/cometbft-0-38-10.d.ts",
+    "lint": "biome check",
+    "prepack": "pnpm clobber && pnpm check",
+    "test": "node ./dist/main.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.3",
+    "base64-js": "^1.5.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@types/node": "^22.1.0",
+    "dprint": "^0.47.2",
+    "mkdist": "^1.5.4",
+    "openapi-typescript": "^7.3.0",
+    "sort-package-json": "^2.10.0",
+    "typescript": "^5.5.4"
+  },
+  "packageManager": "pnpm@9.6.0"
+}

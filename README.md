@@ -1,2 +1,3 @@
 # uplink
-CometBFT RPC connection
+
+CometBFT RPC client
